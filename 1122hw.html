@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>progress bar!</title>
+    <style>
+        #wideobj {
+            position: absolute;
+            height: 100vh;
+            left: 0px;
+            width: 1000vw;
+            background-image: url(https://static01.nyt.com/newsgraphics/2016/07/14/france-attack-scroller/9ec6dcec7e22fffa81a21fb790ba566f2c6aee83/base-big.jpg);
+
+        }
+
+        img {
+            width: 100%;
+            visibility: hidden;
+        }
+
+        .slide {
+            animation-name: slide;
+            animation-duration: 1s;
+            visibility: visible;
+        }
+
+        @keyframes slide {
+            0% {
+                opacity: 0;
+                transform: translateY(70%);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0%);
+            }
+        }
+
+        .fixed {
+            position: fixed;
+            top: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="height: 100vh;background-color: dodgerblue;"></div>
+    <div style="height:1000vh">
+        <div class="sticky-top">
+            <div id="wideobj"></div>
+        </div>
+    </div>
+    <div style="height:100vh;background-color:gray"></div>
+
+    <div style="height:100vh;background-color:royalblue"></div>
+
+    <div>
+        <img id="img1" alt="img1" src="https://p4css.github.io/webScroll/assets/taipei-1.jpg" />
+    </div>
+
+    <div style="height:100vh;background-color:gray"></div>
+
+    <div style="height:500px;background-color: dodgerblue;"></div>
+    <div id="tofix1" style="height:100px;background-color: coral;z-index:99; width:100%"></div>
+    <div style="height:500px;background-color: lightgrey;"></div>
+    <div style="height:500px;background-color: white;">
+        <svg id="tofix2" width="250" height="250" style="z-index:100;">
+            <circle cx="100" cy="100" r="100" fill="coral" />
+        </svg>
+    </div>
+    <div style="height:100vh;background-color: grey;"></div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <script>
+        $(function () {
+            var doch = $(document).height();
+            var winw = $(window).width();
+            var winh = $(window).height();
+            var maxscr = doch - winh;
+            var maxmove = $("#wideobj").width() - winw;
+
+            $(window).scroll(function () {
+                var current_pos = $(window).scrollTop();
+                var newleft = current_pos / maxscr * maxmove * (-1);
+                $("#wideobj").css("left", newleft);
+            });
+
+        });
+
+        $(function () {
+            $(window).scroll(function () {
+                var current_pos = $(window).scrollTop();
+                var winh = $(window).height();
+                var objpos = $("#img1").offset().top;
+                if (objpos < current_pos + winh * 0.8) {
+                    $("#img1").addClass("slide");
+                }
+            });
+        });
+
+        var tofix1_pos = $("#tofix1").offset().top;
+        var tofix2_pos = $("#tofix2").offset().top;
+        $(window).scroll(function () {
+            var current_pos = $(window).scrollTop();
+            if (current_pos > tofix1_pos) {
+                $("#tofix1").addClass("fixed");
+            } else {
+                $("#tofix1").removeClass("fixed");
+            }
+            if (current_pos > tofix2_pos) {
+                $("#tofix2").addClass("fixed");
+            } else {
+                $("#tofix2").removeClass("fixed");
+            }
+
+        });
+    </script>
+</body>
+
+</html>
+
